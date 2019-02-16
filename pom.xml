@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>fr.diguiet</groupId>
+    <artifactId>sila-nespresso</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <sila_java.version>0.0.3-SNAPSHOT</sila_java.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Compiler Versioning Java 8 -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <!-- Common libraries -->
+        <slf4j.version>1.7.25</slf4j.version>
+        <junit.version>5.0.1</junit.version>
+        <logback.version>1.2.3</logback.version>
+        <guava.version>20.0</guava.version>
+
+        <!-- gRPC related dependencies -->
+        <grpc.version>1.12.0</grpc.version>
+        <protobuf.version>3.4.0</protobuf.version>
+        <protoc.maven.version>3.5.1.1</protoc.maven.version>
+
+        <!-- Packaging -->
+        <spring.version>2.0.3.RELEASE</spring.version>
+        <launch4j.version>1.7.23</launch4j.version>
+    </properties>
+
+    <modules>
+        <module>server</module>
+        <module>lib/sila_java/library</module>
+    </modules>
+</project>

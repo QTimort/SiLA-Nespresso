@@ -1,0 +1,27 @@
+## Language or framework specific
+# General
+*.log
+
+# Python
+*.pyc
+
+# Java
+target/
+
+# C++
+build/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Eclipse
+.project
+.classpath
+.DS_Store
+.settings
+
+# GitLab CI
+builds/
+cache/
+**/.settings
