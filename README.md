@@ -1,7 +1,7 @@
-# SiLA Espresso
+# SiLA Nespresso
 
 ## Description
-A funny implementation of a [SiLA](https://sila-standard.com/) compliant server
+A fun implementation of a [SiLA](https://sila-standard.com/) compliant server
 that allows clients to see available Nespresso (CH) coffees and to make a shopping list.
 
 ## Motivation
