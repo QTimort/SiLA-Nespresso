@@ -1,39 +1,133 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Feature SiLA2Version="0.1" FeatureVersion="1.0" Originator="org.silastandard" Category="examples"
+<Feature SiLA2Version="0.1" FeatureVersion="1.0" Originator="fr.diguiet" Category="misc"
          xmlns="http://www.sila-standard.org"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.sila-standard.org https://gitlab.com/SiLA2/sila_base/raw/master/schema/FeatureDefinition.xsd">
-    <Identifier>GreetingProvider</Identifier>
-    <DisplayName>Greeting Provider</DisplayName>
-    <Description>Minimum Feature Definition as example. Provides a Greeting</Description>
+    <Identifier>Nespresso</Identifier>
+    <DisplayName>Nespresso</DisplayName>
+    <Description>List available Nespresso coffees and allows clients to add them into a shopping list</Description>
     <Command>
-        <Identifier>SayHello</Identifier>
-        <DisplayName>Say Hello</DisplayName>
-        <Description>Does what it says</Description>
+        <Identifier>AddCoffees</Identifier>
+        <DisplayName>Add Coffees</DisplayName>
+        <Description>Add Coffees into the shopping list</Description>
         <Observable>No</Observable>
         <Parameter>
-            <Identifier>Name</Identifier>
-            <DisplayName>Name</DisplayName>
-            <Description>Your Name</Description>
+            <Identifier>Coffees</Identifier>
+            <DisplayName>Coffees</DisplayName>
+            <Description>Coffees to add to the shopping list</Description>
             <DataType>
-                <Basic>String</Basic>
+                <List>
+                    <DataType>
+                        <Basic>String</Basic>
+                    </DataType>
+                </List>
             </DataType>
         </Parameter>
-        <Response>
-            <Identifier>Greeting</Identifier>
-            <DisplayName>Greeting</DisplayName>
-            <Description>The greeting coming back at you</Description>
+    </Command>
+    <Command>
+        <Identifier>RemoveCoffee</Identifier>
+        <DisplayName>Remove Coffee</DisplayName>
+        <Description>Remove a quantity of coffee from the shopping list</Description>
+        <Observable>No</Observable>
+        <Parameter>
+            <Identifier>Coffee</Identifier>
+            <DisplayName>The coffee to remove</DisplayName>
+            <Description>The quantity of coffee to remove</Description>
             <DataType>
-                <Basic>String</Basic>
+                <Structure>
+                    <Element>
+                        <Identifier>Name</Identifier>
+                        <DisplayName>Name</DisplayName>
+                        <Description>The coffee name</Description>
+                        <DataType>
+                            <Basic>String</Basic>
+                        </DataType>
+                    </Element>
+                    <Element>
+                        <Identifier>Quantity</Identifier>
+                        <DisplayName>Quantity</DisplayName>
+                        <Description>Quantity to remove</Description>
+                        <DataType>
+                            <Basic>Integer</Basic>
+                        </DataType>
+                    </Element>
+                </Structure>
             </DataType>
-        </Response>
+        </Parameter>
     </Command>
     <Property>
-        <Identifier>StartYear</Identifier>
-        <DisplayName>Start Year</DisplayName>
-        <Description>The year the server has been started</Description>
+        <Identifier>Coffees</Identifier>
+        <DisplayName>Coffees</DisplayName>
+        <Description>The list of Nespresso coffees</Description>
         <DataType>
-            <Basic>Integer</Basic>
+            <List>
+                <DataType>
+                    <Structure>
+                        <Element>
+                            <Identifier>Name</Identifier>
+                            <DisplayName>Name</DisplayName>
+                            <Description>The coffee name</Description>
+                            <DataType>
+                                <Basic>String</Basic>
+                            </DataType>
+                        </Element>
+                        <Element>
+                            <Identifier>Description</Identifier>
+                            <DisplayName>Description</DisplayName>
+                            <Description>The coffee description</Description>
+                            <DataType>
+                                <Basic>String</Basic>
+                            </DataType>
+                        </Element>
+                        <Element>
+                            <Identifier>Intensity</Identifier>
+                            <DisplayName>Intensity</DisplayName>
+                            <Description>The coffee intensity</Description>
+                            <DataType>
+                                <Basic>Integer</Basic>
+                            </DataType>
+                        </Element>
+                        <Element>
+                            <Identifier>CupSize</Identifier>
+                            <DisplayName>Cup Size</DisplayName>
+                            <Description>The coffee recommended cup size(s)</Description>
+                            <DataType>
+                                <Basic>String</Basic>
+                            </DataType>
+                        </Element>
+                    </Structure>
+                </DataType>
+            </List>
+        </DataType>
+        <Observable>No</Observable>
+    </Property>
+    <Property>
+        <Identifier>ShoppingList</Identifier>
+        <DisplayName>Shopping List</DisplayName>
+        <Description>The shopping list</Description>
+        <DataType>
+            <List>
+                <DataType>
+                    <Structure>
+                        <Element>
+                            <Identifier>Name</Identifier>
+                            <DisplayName>Name</DisplayName>
+                            <Description>The name of the coffee</Description>
+                            <DataType>
+                                <Basic>String</Basic>
+                            </DataType>
+                        </Element>
+                        <Element>
+                            <Identifier>Quantity</Identifier>
+                            <DisplayName>Quantity</DisplayName>
+                            <Description>The quantity</Description>
+                            <DataType>
+                                <Basic>Integer</Basic>
+                            </DataType>
+                        </Element>
+                    </Structure>
+                </DataType>
+            </List>
         </DataType>
         <Observable>No</Observable>
     </Property>
