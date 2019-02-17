@@ -22,9 +22,6 @@ public class Server implements AutoCloseable {
     private static final String SERVER_VERSION = "0.42";
     private final SiLAServer server;
 
-    /**
-     * Simple main function that starts the server and keeps it alive
-     */
     public static void main(final String[] args) {
         final ArgumentHelper argumentHelper = new ArgumentHelper(args, SERVER_TYPE);
 
@@ -41,10 +38,6 @@ public class Server implements AutoCloseable {
         this.server.close();
     }
 
-    /**
-     * Application Class using command line arguments
-     * @param argumentHelper Custom Argument Helper
-     */
     private Server(@NonNull final ArgumentHelper argumentHelper) {
         final ServerInformation serverInfo = new ServerInformation(
                 SERVER_TYPE, SERVER_DESC, SERVER_VENDOR, SERVER_VERSION
