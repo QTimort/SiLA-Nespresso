@@ -1,37 +1,78 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>fr.diguiet</groupId>
+    <groupId>com.diguiet</groupId>
     <artifactId>sila-nespresso</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
-        <sila_java.version>0.0.3-SNAPSHOT</sila_java.version>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- Compiler Versioning Java 8 -->
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <!-- Common libraries -->
         <slf4j.version>1.7.25</slf4j.version>
-        <junit.version>5.0.1</junit.version>
         <logback.version>1.2.3</logback.version>
-        <guava.version>20.0</guava.version>
+        <guava.version>30.0-jre</guava.version>
+        <spring.version>2.4.4</spring.version>
 
         <!-- gRPC related dependencies -->
-        <grpc.version>1.12.0</grpc.version>
+        <grpc.version>1.20.0</grpc.version>
         <protobuf.version>3.4.0</protobuf.version>
         <protoc.maven.version>3.5.1.1</protoc.maven.version>
-
-        <!-- Packaging -->
-        <spring.version>2.0.3.RELEASE</spring.version>
-        <launch4j.version>1.7.23</launch4j.version>
+        <sila_base.path>common/sila_java/library/sila_base/src/main/resources/sila_base</sila_base.path>
     </properties>
 
     <modules>
         <module>server</module>
-        <module>lib/sila_java/library</module>
+        <module>lib/sila_java/library/sila_base</module>
+        <module>lib/sila_java/library/core</module>
+        <module>lib/sila_java/library/server_base</module>
+        <module>lib/sila_java/library/maven_plugin</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

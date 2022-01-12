@@ -5,9 +5,7 @@ A fun implementation of a [SiLA](https://sila-standard.com/) compliant server
 that allows clients to see available Nespresso (CH) coffees and to make a shopping list.
 
 ## Motivation
-I'm a coffee enthusiast working in a [Lab automation company](http://unitelabs.ch) and 
-I thought that it could be fun to use our software with the [SiLA Standard](https://sila-standard.com/) 
-in order to make it simpler for us to order coffee ☕ !  
+I'm a coffee enthusiast working in lab automation and thought that it would be fun to use the [SiLA Standard](https://sila-standard.com/) to make a coffee shopping list from Nespresso ☕ !  
 
 ## Setup
 
@@ -38,7 +36,7 @@ in order to make it simpler for us to order coffee ☕ !
 
 2. Start server with discovery enabled. Replace `YOUR-NET-INTERFACE` with the name of one of the interface previously listed.
     ```
-    java -jar ./server/target/server-1.0.0-SNAPSHOT-jar-with-dependencies.jar -n YOUR-NET-INTERFACE
+    java -jar ./server/target/server-1.0.0-SNAPSHOT.jar -n YOUR-NET-INTERFACE
     ```
 
 3. To stop the server type `stop`and press enter.
@@ -46,20 +44,6 @@ in order to make it simpler for us to order coffee ☕ !
 ## Connect to the server
 In order to interact with the server you'll need a client
 
-### SiLA Browser
-The easiest solution is to use the SiLA Browser which is available here: https://unitelabs.gitlab.io/unitelabs_base/
-
-1. Download the jar
-    ```
-    https://unitelabs.gitlab.io/unitelabs_base/download/sila_browser.jar
-    ```
-2. Start the Browser
-    ```
-    java -jar sila_browser.jar
-    ```
-3. Go to http://127.0.0.1:8080/servers 
-
+### Universal SiLA Client
+The easiest solution to use the server is through the Universal SiLA Client which is available here: https://gitlab.com/SiLA2/universal-sila-client/sila_universal_client
 If everything is correct, you should be able to see and interact with the Nespresso SiLA Server
-
-### SiLA Manager
-Todo

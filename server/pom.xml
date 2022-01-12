@@ -2,31 +2,32 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <!-- In this repository, everything is inherited from the parent pom -->
     <parent>
-        <groupId>fr.diguiet</groupId>
+        <groupId>com.diguiet</groupId>
         <artifactId>sila-nespresso</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
-    <groupId>fr.diguiet.sila-nespresso</groupId>
+
     <artifactId>server</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
 
     <!-- Common Dependencies for Server and Client side -->
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
-        <!-- Argument Parser -->
         <dependency>
-            <groupId>net.sourceforge.argparse4j</groupId>
-            <artifactId>argparse4j</artifactId>
-            <version>0.8.1</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.13.1</version>
         </dependency>
-
         <!-- SiLA Dependencies -->
         <dependency>
             <groupId>org.sila-standard.sila_java.library</groupId>
@@ -45,19 +46,8 @@
         </dependency>
         <dependency>
             <groupId>org.sila-standard.sila_java.library</groupId>
-            <artifactId>manager</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.sila-standard.sila_java.library</groupId>
             <artifactId>maven_plugin</artifactId>
             <version>0.0.3-SNAPSHOT</version>
-        </dependency>
-        <!-- Less verbose POJOs -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.16.20</version>
         </dependency>
     </dependencies>
 
@@ -84,26 +74,24 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>repackage</goal>
                         </goals>
-                        <configuration>
-                            <archive>
-                                <manifest>
-                                    <mainClass>fr.diguiet.nespresso.server.Server</mainClass>
-                                </manifest>
-                            </archive>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                    <mainClass>com.diguiet.nespresso.server.Server</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
