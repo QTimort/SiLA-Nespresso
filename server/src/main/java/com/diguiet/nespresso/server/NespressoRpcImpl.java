@@ -53,24 +53,20 @@ public class NespressoRpcImpl extends NespressoGrpc.NespressoImplBase {
 
     @Override
     public void getCoffees(
-            final NespressoOuterClass.Get_Coffees_Parameters request,
-            final StreamObserver<NespressoOuterClass.Get_Coffees_Responses> responseObserver) {
-        try {
-            final List<NespressoOuterClass.Get_Coffees_Responses.Coffees_Struct> coffeeListStructs =
-                    this.capsules
-                            .values()
-                            .stream()
-                            .map(NespressoRpcImpl::capsuleToCoffeesStruct)
-                            .collect(Collectors.toList());
-            responseObserver.onNext(NespressoOuterClass.Get_Coffees_Responses
-                    .newBuilder()
-                    .addAllCoffees(coffeeListStructs)
-                    .build()
-            );
-            responseObserver.onCompleted();
-        } catch (Throwable e) {
-            int i = 0;
-        }
+        final NespressoOuterClass.Get_Coffees_Parameters request,
+        final StreamObserver<NespressoOuterClass.Get_Coffees_Responses> responseObserver) {
+        final List<NespressoOuterClass.Get_Coffees_Responses.Coffees_Struct> coffeeListStructs =
+                this.capsules
+                        .values()
+                        .stream()
+                        .map(NespressoRpcImpl::capsuleToCoffeesStruct)
+                        .collect(Collectors.toList());
+        responseObserver.onNext(NespressoOuterClass.Get_Coffees_Responses
+                .newBuilder()
+                .addAllCoffees(coffeeListStructs)
+                .build()
+        );
+        responseObserver.onCompleted();
     }
 
     @Override
