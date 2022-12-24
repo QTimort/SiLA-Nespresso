@@ -1,14 +1,11 @@
 package com.diguiet.nespresso.server;
 
 import lombok.NonNull;
-import sila_java.library.core.encryption.SelfSignedCertificate;
+import lombok.extern.slf4j.Slf4j;
 import sila_java.library.server_base.SiLAServer;
 import sila_java.library.server_base.identification.ServerInformation;
 import sila_java.library.server_base.utils.ArgumentHelper;
 
-import java.io.IOException;
-
-import static sila_java.library.core.utils.Utils.blockUntilStop;
 import static sila_java.library.core.utils.FileUtils.getResourceContent;
 
 /**
@@ -16,21 +13,20 @@ import static sila_java.library.core.utils.FileUtils.getResourceContent;
  *
  * Allow clients to see and add Nespresso coffees into a shopping list
  */
+@Slf4j
 public class Server implements AutoCloseable {
-    private static final String SERVER_TYPE = "Nespresso SiLA Server";
+    private static final String SERVER_TYPE = "NespressoSiLAServer";
     private static final String SERVER_DESC = "Allow clients to see and add Nespresso coffees into a shopping list";
     private static final String SERVER_VENDOR = "https://github.com/QTimort";
-    private static final String SERVER_VERSION = "0.42";
+    private static final String SERVER_VERSION = "2.42";
     private final SiLAServer siLAServer;
 
     public static void main(final String[] args) {
         final ArgumentHelper argumentHelper = new ArgumentHelper(args, SERVER_TYPE);
-        // Start Server
-        try (final Server server = new Server(argumentHelper)) {
-            Runtime.getRuntime().addShutdownHook(new Thread(server::close));
-            blockUntilStop();
-        }
-        System.out.println("Server closed.");
+        final Server server = new Server(argumentHelper);
+        log.info("To stop the server press CTRL + C.");
+        server.siLAServer.blockUntilShutdown();
+        log.info("termination complete.");
     }
 
     @Override
@@ -42,27 +38,36 @@ public class Server implements AutoCloseable {
         final ServerInformation serverInfo = new ServerInformation(
                 SERVER_TYPE, SERVER_DESC, SERVER_VENDOR, SERVER_VERSION
         );
-        try {
-            final SiLAServer.Builder builder;
-            if (argumentHelper.getConfigFile().isPresent()) {
-                builder = SiLAServer.Builder.withConfig(argumentHelper.getConfigFile().get(), serverInfo);
-            } else {
-                builder = SiLAServer.Builder.withoutConfig(serverInfo);
-            }
-            argumentHelper.getPort().ifPresent(builder::withPort);
-            argumentHelper.getInterface().ifPresent(builder::withDiscovery);
 
-            if (argumentHelper.useEncryption()) {
-                builder.withSelfSignedCertificate();
+        try {
+            final SiLAServer.Builder builder = SiLAServer.Builder.newBuilder(serverInfo);
+
+            builder.withPersistentConfig(argumentHelper.getConfigFile().isPresent());
+
+            argumentHelper.getConfigFile().ifPresent(builder::withPersistentConfigFile);
+
+            builder.withPersistentTLS(
+                    argumentHelper.getPrivateKeyFile(),
+                    argumentHelper.getCertificateFile(),
+                    argumentHelper.getCertificatePassword()
+            );
+
+            if (argumentHelper.useUnsafeCommunication()) {
+                builder.withUnsafeCommunication(true);
             }
+
+            argumentHelper.getHost().ifPresent(builder::withHost);
+            argumentHelper.getPort().ifPresent(builder::withPort);
+            argumentHelper.getInterface().ifPresent(builder::withNetworkInterface);
+            builder.withDiscovery(argumentHelper.hasNetworkDiscovery());
 
             builder.addFeature(
                     getResourceContent("Nespresso.sila.xml"),
                     new NespressoRpcImpl()
             );
-
             this.siLAServer = builder.start();
-        } catch (IOException | SelfSignedCertificate.CertificateGenerationException e) {
+        } catch (Exception e) {
+            log.error("Something went wrong when building / starting server", e);
             throw new RuntimeException(e);
         }
 
